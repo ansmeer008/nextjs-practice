@@ -6,13 +6,15 @@ export default function NavBar() {
 
   return (
     <nav>
-      <Link href="/" legacyBehavior>
-        <a className={router.pathname === "/" ? "active" : ""}>Home</a>
-      </Link>
-      <Link href="/about" legacyBehavior>
-        <a className={router.pathname === "/about" ? "active" : ""}>About</a>
-      </Link>
-      {/* style jsx 사용법 */}
+      <img src="/vercel.svg" />
+      <div>
+        <Link href="/" legacyBehavior>
+          <a className={router.pathname === "/" ? "active" : ""}>Home</a>
+        </Link>
+        <Link href="/about" legacyBehavior>
+          <a className={router.pathname === "/about" ? "active" : ""}>About</a>
+        </Link>
+      </div>
       <style jsx>{`
         nav {
           display: flex;
