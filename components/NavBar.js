@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import styles from "./NavBar.module.css";
 
 export default function NavBar() {
   const router = useRouter();
@@ -8,23 +7,23 @@ export default function NavBar() {
   return (
     <nav>
       <Link href="/" legacyBehavior>
-        <a
-          className={`${styles.link} ${
-            router.pathname === "/" ? styles.active : ""
-          }`}
-        >
-          Home
-        </a>
+        <a className={router.pathname === "/" ? "active" : ""}>Home</a>
       </Link>
       <Link href="/about" legacyBehavior>
-        <a
-          className={`${styles.link} ${
-            router.pathname === "/about" ? styles.active : ""
-          }`}
-        >
-          About
-        </a>
+        <a className={router.pathname === "/about" ? "active" : ""}>About</a>
       </Link>
+      {/* style jsx 사용법 */}
+      <style jsx>{`
+        nav {
+          background-color: tomato;
+        }
+        a {
+          text-decoration: none;
+        }
+        .active {
+          color: yellow;
+        }
+      `}</style>
     </nav>
   );
 }
@@ -37,3 +36,8 @@ export default function NavBar() {
 //그래서 Link 컴포넌트 내부에 해당 내용들은 적용해주어야 함.
 
 //useRouter hook으로는 location에 대한 정보를 얻을 수 있다.
+
+//style jsx 사용하면 css module 파일을 적용한 것처럼 적용한 곳마다 적용한 스타일이 모듈화 된다
+//스타일들 적용되는 범위가 오직 작성한 컴포넌트 내부로 범위가 한정된다.
+//부모 컴포넌트가 동일한 클래스 이름을 사용하고 있더라도 상관 없으며, 태그에 대한 style도 전역으로 적용되지도 않는다.
+//css 파일을 import 해 올 필요도 없다는 장점이 있음.
