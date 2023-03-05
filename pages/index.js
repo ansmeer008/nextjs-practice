@@ -3,22 +3,13 @@ import { useEffect, useState } from "react";
 
 const API_KEY = "d7123e64cbc14ba589c3add54cc89842";
 
-export default function Home() {
-  const [movies, setMovies] = useState();
-
-  useEffect(() => {
-    (async () => {
-      const { results } = await (await fetch(`/api/movies`)).json();
-      setMovies(results);
-    })();
-  }, []);
+export default function Home({ results }) {
   return (
     <div className="container">
       <Seo title="Home" />
-      {!movies && <h4>Loading...</h4>}
-      {movies?.map((movie) => (
+      {results?.map((movie) => (
         <div className="movie" key={movie.id}>
-          <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
+          <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} />
           <h4>{movie.original_title}</h4>
         </div>
       ))}
@@ -59,3 +50,18 @@ export default function Home() {
 //유저가 웹 사이트에 가면 초기 미리 생성된 HTML 페이지를 볼 수 있게 되고
 //상호작용이 일어나면서 react.js는 이 HTML을 받아서 동작하게 된다
 //SEO에도 굉장히 좋다.
+
+//아래 함수는 서버 사이드 렌더링을 가능하게 해주는데, 이때 이 함수 이름은 절대로 바뀌면 안 된다.
+//이 함수에 어떤 내용을 작성하든지 그 코드는 server에서 돌아가게 된다.
+//서버에서 받은 데이터를 페이지에 props로 전달해줄 수 있다.
+//이 방법을 사용하면 유저가 페이지에 들어왔을 때 데이터까지 Html로 준비된 화면을 보여줄 수 있다.
+export async function getServerSideProps() {
+  const { results } = await (
+    await fetch(`http://localhost:3000/api/movies`)
+  ).json();
+  return {
+    props: {
+      results,
+    },
+  };
+}
