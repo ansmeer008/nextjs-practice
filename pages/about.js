@@ -1,5 +1,12 @@
+import NavBar from "@/components/NavBar";
+
 export default function Potato() {
-  return "about us";
+  return (
+    <div>
+      <NavBar />
+      <h1>About</h1>
+    </div>
+  );
 }
 
 //nextjs에서 중요한 건 pages 폴더 내부에 작성하는 파일의 이름이다.
