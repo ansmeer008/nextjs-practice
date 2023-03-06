@@ -7,5 +7,9 @@ export default function Detail() {
   const router = useRouter();
   console.log(router);
   //콘솔에 찍하는 객체에서 query 키를 확인하면 id에 해당하는 값이 쿼리 키의 값인 것을 확인할 수 있다.
-  return "detail";
+  return (
+    <div>
+      <h4>{router.query.title || "Loading..."}</h4>
+    </div>
+  );
 }

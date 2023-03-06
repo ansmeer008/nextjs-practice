@@ -4,18 +4,43 @@ import { useRouter } from "next/router";
 
 export default function Home({ results }) {
   const router = useRouter();
-  const onClick = (id) => {
-    router.push(`/movies/${id}`);
+  const onClick = (id, title) => {
+    router.push(
+      {
+        pathname: `/movies/${id}`,
+        query: {
+          title,
+        },
+      },
+      `/movies/${id}`
+    );
+    //위처럼 작성하면 쿼리 부분을 마스킹(mask)할 수 있다.
+    //실제 URL에는 'http://localhost:3000/movies/631842'와 같은 형식으로 보이게 되고
+    //그래도 router에서는 query 키에서 쿼리 값을 찾을 수 있다.
   };
 
   return (
     <div className="container">
       <Seo title="Home" />
       {results?.map((movie) => (
-        <div key={movie.id} className="movie" onClick={() => onClick(movie.id)}>
+        <div
+          key={movie.id}
+          className="movie"
+          onClick={() => onClick(movie.id, movie.original_title)}
+        >
           <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} />
           <h4>
-            <Link href={`/movies/${movie.id}`}>{movie.original_title}</Link>
+            <Link
+              href={{
+                pathname: `/movies/${movie.id}`,
+                query: {
+                  title: movie.original_title,
+                },
+              }}
+              as={`/movies/${movie.id}`}
+            >
+              {movie.original_title}
+            </Link>
           </h4>
         </div>
       ))}
